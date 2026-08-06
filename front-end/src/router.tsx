@@ -7,7 +7,7 @@ import Pedidos from "./Pedidos";
 
 const Layout = () => {
   return (
-    <div>
+    <div className="flex min-h-screen flex-col bg-red-500">
       <Header />
       <Outlet />
     </div>
