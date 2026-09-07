@@ -26,22 +26,20 @@ const Login = () => {
     >
       <div className="flex flex-col justify-center gap-2">
         <Link to="/">
-          <img src="./logo.png" alt="" className="mb-4" />
+          <img src="./logo.png" alt="" className="mx-auto mb-4" />
         </Link>
 
-        <Input
-          placeholder="E-mail"
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <Input
-          placeholder="Senha"
-          onChange={(e) => setPassword(e.target.value)}
-          type="Password"
-        />
-
-        <p className="text-left text-sm font-bold text-red-500">
-          Usuário não encontrado
-        </p>
+        <div className="mb-3 flex flex-col gap-2">
+          <Input
+            placeholder="E-mail"
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <Input
+            placeholder="Senha"
+            onChange={(e) => setPassword(e.target.value)}
+            type="Password"
+          />
+        </div>
 
         <Button title="Login" type="submit" />
 
