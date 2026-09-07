@@ -24,7 +24,7 @@ const Login = () => {
       className="flex h-screen items-center justify-center bg-[#161410]"
       onSubmit={handleSubmit}
     >
-      <div className="flex flex-col items-center justify-center gap-2">
+      <div className="flex flex-col justify-center gap-2">
         <Link to="/">
           <img src="./logo.png" alt="" className="mb-4" />
         </Link>
@@ -38,6 +38,10 @@ const Login = () => {
           onChange={(e) => setPassword(e.target.value)}
           type="Password"
         />
+
+        <p className="text-left text-sm font-bold text-red-500">
+          Usuário não encontrado
+        </p>
 
         <Button title="Login" type="submit" />
 
