@@ -6,17 +6,35 @@ import Button from "../components/Button";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   async function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    const response = await fetch("http://localhost:3000/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
-    });
-    const data = await response.json();
-    console.log(data);
+    try {
+      const response = await fetch("http://localhost:3000/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      if (response.status === 404) {
+        setError("Usuário não encontrado");
+      }
+
+      if (response.status === 400) {
+        setError("Usuário e senha são obrigatórios");
+      }
+
+      if (response.status === 200) {
+        setError("");
+        const data = await response.json();
+        console.log(data);
+      }
+    } catch (error) {
+      console.log(error);
+      return;
+    }
   }
 
   return (
@@ -39,6 +57,7 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
             type="Password"
           />
+          <p className="text-left text-sm font-bold text-red-500">{error}</p>
         </div>
 
         <Button title="Login" type="submit" />
