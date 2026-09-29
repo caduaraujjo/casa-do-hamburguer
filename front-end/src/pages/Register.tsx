@@ -7,7 +7,7 @@ const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirm, setConfirm] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [cep, setCep] = useState("");
   const [error, setError] = useState("");
 
@@ -15,6 +15,16 @@ const Register = () => {
     e.preventDefault();
 
     try {
+      if (!name || !email || !password || !cep) {
+        alert("Todas as informações são obrigatórias");
+        setError("Todas as informações são obrigatórias");
+        return;
+      }
+
+      if (password !== confirmPassword) {
+        setError("Senhas não conferem");
+        return;
+      }
       const response = await fetch("http://localhost:3000/register", {
         method: "POST",
         headers: { "Content-type": "application/json" },
@@ -32,6 +42,7 @@ const Register = () => {
           setName("");
           setEmail("");
           setPassword("");
+          setConfirmPassword("");
           setCep("");
           setError("");
           break;
@@ -41,12 +52,14 @@ const Register = () => {
         default:
           setError("");
       }
-      console.log(response);
+
+      const data = await response.json();
+      console.log(data);
     } catch (error) {
       console.log(error);
       return;
     }
-    console.log({ name, email, password, confirm, cep });
+    console.log({ name, email, password, confirmPassword, cep });
   }
 
   return (
@@ -62,26 +75,31 @@ const Register = () => {
         <Input
           placeholder="Nome Completo"
           onChange={(e) => setName(e.target.value)}
+          value={name}
         />
         <Input
           placeholder="E-mail"
           type="email"
           onChange={(e) => setEmail(e.target.value)}
+          value={email}
         />
         <Input
           placeholder="Senha"
           type="password"
           onChange={(e) => setPassword(e.target.value)}
+          value={password}
         />
         <Input
           placeholder="Confirme sua senha"
           type="password"
-          onChange={(e) => setConfirm(e.target.value)}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+          value={confirmPassword}
         />
         <Input
           placeholder="CEP"
           type="text"
           onChange={(e) => setCep(e.target.value)}
+          value={cep}
         />
         <p className="font-bold text-red-500">{error}</p>
 
