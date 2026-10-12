@@ -19,7 +19,7 @@ app.post("/login", async (req: Request, res: Response) => {
     }
 
     const user = await prisma.user.findFirst({
-      where: { email: email, password: password },
+      where: { email },
     });
 
     if (!user) {
@@ -27,7 +27,19 @@ app.post("/login", async (req: Request, res: Response) => {
       return;
     }
 
-    res.status(200).json(user);
+    const match = await bcrypt.compare(password, user?.password);
+
+    if (!match) {
+      res.status(401).json({ message: "Usuário não encontrado" });
+      return;
+    }
+
+    res.status(200).json({
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      cep: user.cep,
+    });
   } catch (error) {
     res.status(500).json({ message: "Erro no servidor." });
     return;
