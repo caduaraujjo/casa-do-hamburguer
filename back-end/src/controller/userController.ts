@@ -26,12 +26,20 @@ export const login = async (req: Request, res: Response) => {
       return;
     }
 
-    res.status(200).json({
+    const userInfos = {
       id: user.id,
       name: user.name,
       email: user.email,
       cep: user.cep,
+    };
+
+    console.log(userInfos);
+
+    res.cookie("user", userInfos, {
+      maxAge: 30 * 1000,
     });
+
+    res.status(200).json(userInfos);
   } catch (error) {
     res.status(500).json({ message: "Erro no servidor." });
     return;
