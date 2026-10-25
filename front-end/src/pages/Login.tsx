@@ -2,11 +2,15 @@ import { useState } from "react";
 import Input from "../components/Input";
 import { Link, useNavigate } from "react-router";
 import Button from "../components/Button";
+import { useContext } from "react";
+import { UserContext } from "../contexts/UserContext";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+
+  const { setUser } = useContext(UserContext);
 
   const navigate = useNavigate();
 
@@ -50,7 +54,7 @@ const Login = () => {
         setError("");
         const data = await response.json();
         navigate("/");
-        console.log(data);
+        setUser(data);
       }
     } catch (error) {
       console.log(error);
