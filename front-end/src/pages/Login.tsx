@@ -11,6 +11,7 @@ const Login = () => {
   const [error, setError] = useState("");
 
   const { setUser } = useContext(UserContext);
+  console.log(document.cookie);
 
   const navigate = useNavigate();
 
