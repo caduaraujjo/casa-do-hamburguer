@@ -1,4 +1,4 @@
 const Pedidos = () => {
-  return <p>Rota de pediddos</p>;
+  return <p className="text-white">Rota de pediddos</p>;
 };
 export default Pedidos;
